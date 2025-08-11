@@ -63,7 +63,8 @@ def create_message_content(
     elif isinstance(content, list):
         return [
             TextContentBlock(
-                text=Text(value=item.get("text"), annotations=[]), type="text"
+                # FIX: Ensure text value is never None, default to empty string
+                text=Text(value=item.get("text") or "", annotations=[]), type="text"
             )
             for item in content
         ]
@@ -91,7 +92,8 @@ def create_text_message_delta(
                     TextDeltaBlock(
                         index=idx,
                         type="text",
-                        text=TextDelta(value=item.get("text"), annotations=[]),
+                        # FIX: Ensure text value is never None, default to empty string
+                        text=TextDelta(value=item.get("text") or "", annotations=[]),
                     )
                 )
 
